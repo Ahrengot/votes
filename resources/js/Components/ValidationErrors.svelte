@@ -16,7 +16,7 @@
             Whoops! Something went wrong.
         </div>
 
-        <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+        <ul class="mt-3 list-inside list-disc text-sm text-red-600">
             {#each Object.keys(errors) as key, index}
                 <li key={index}>{errors[key]}</li>
             {/each}

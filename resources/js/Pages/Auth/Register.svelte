@@ -1,10 +1,10 @@
 <script>
-    import BreezeButton from "@/Components/Button.svelte";
-    import BreezeGuestLayout from "@/Layouts/Guest.svelte";
-    import BreezeInput from "@/Components/Input.svelte";
-    import BreezeLabel from "@/Components/Label.svelte";
-    import BreezeValidationErrors from "@/Components/ValidationErrors.svelte";
-    import { inertia, useForm } from "@inertiajs/svelte";
+    import BreezeButton from '@/Components/Button.svelte';
+    import BreezeGuestLayout from '@/Layouts/Guest.svelte';
+    import BreezeInput from '@/Components/Input.svelte';
+    import BreezeLabel from '@/Components/Label.svelte';
+    import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
+    import { inertia, useForm } from '@inertiajs/svelte';
     export let errors = {};
 
     let form = useForm({
@@ -22,8 +22,8 @@
     }
 
     const submit = () => {
-        $form.post("/register", {
-            onSuccess: () => $form.reset("password", "password_confirmation"),
+        $form.post('/register', {
+            onSuccess: () => $form.reset('password', 'password_confirmation'),
         });
     };
 </script>
@@ -46,7 +46,7 @@
                 required
                 autofocus
                 autocomplete="name"
-                on:input={(evt) => ($form.name = evt.detail)}
+                on:input={evt => ($form.name = evt.detail)}
             />
         </div>
 
@@ -59,7 +59,7 @@
                 value={form.email}
                 required
                 autocomplete="username"
-                on:input={(evt) => ($form.email = evt.detail)}
+                on:input={evt => ($form.email = evt.detail)}
             />
         </div>
 
@@ -72,7 +72,7 @@
                 value={form.password}
                 required
                 autocomplete="new-password"
-                on:input={(evt) => ($form.password = evt.detail)}
+                on:input={evt => ($form.password = evt.detail)}
             />
         </div>
 
@@ -85,15 +85,15 @@
                 value={form.password_confirmation}
                 required
                 autocomplete="new-password"
-                on:input={(evt) => ($form.password_confirmation = evt.detail)}
+                on:input={evt => ($form.password_confirmation = evt.detail)}
             />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="mt-4 flex items-center justify-end">
             <a
                 href="/login"
                 use:inertia
-                class="underline text-sm text-gray-600 hover:text-gray-900"
+                class="text-sm text-gray-600 underline hover:text-gray-900"
             >
                 Already registered?
             </a>

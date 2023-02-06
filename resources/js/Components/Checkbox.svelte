@@ -1,5 +1,5 @@
 <script>
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher } from 'svelte';
 
     const dispatch = createEventDispatcher();
 
@@ -9,7 +9,7 @@
     let proxyChecked = checked;
 
     function onChange() {
-        dispatch("update:checked", proxyChecked);
+        dispatch('update:checked', proxyChecked);
     }
 </script>
 

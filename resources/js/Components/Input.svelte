@@ -1,27 +1,27 @@
 <script>
-    import { createEventDispatcher, onMount } from "svelte";
+    import { createEventDispatcher, onMount } from 'svelte';
 
     const dispatch = createEventDispatcher();
 
     let className;
     let inputElement;
 
-    export let value = "";
+    export let value = '';
     export { className as class };
 
     function onInput() {
-        dispatch("input", value);
+        dispatch('input', value);
     }
 
     onMount(() => {
-        if (inputElement.hasAttribute("autofocus")) {
+        if (inputElement.hasAttribute('autofocus')) {
             inputElement.focus();
         }
     });
 </script>
 
 <input
-    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm {className}"
+    class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 {className}"
     bind:value
     on:input={onInput}
     bind:this={inputElement}

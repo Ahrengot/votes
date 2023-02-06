@@ -1,15 +1,15 @@
 <script>
-    import BreezeButton from "@/Components/Button.svelte";
-    import BreezeGuestLayout from "@/Layouts/Guest.svelte";
-    import BreezeInput from "@/Components/Input.svelte";
-    import BreezeLabel from "@/Components/Label.svelte";
-    import BreezeValidationErrors from "@/Components/ValidationErrors.svelte";
-    import { useForm } from "@inertiajs/svelte";
+    import BreezeButton from '@/Components/Button.svelte';
+    import BreezeGuestLayout from '@/Layouts/Guest.svelte';
+    import BreezeInput from '@/Components/Input.svelte';
+    import BreezeLabel from '@/Components/Label.svelte';
+    import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
+    import { useForm } from '@inertiajs/svelte';
     const form = useForm({
-        password: "",
+        password: '',
     });
     const submit = () => {
-        $form.post(window.route("password.confirm"), {
+        $form.post(window.route('password.confirm'), {
             onFinish: () => $form.reset(),
         });
     };
@@ -38,11 +38,11 @@
                 required
                 autocomplete="current-password"
                 autofocus
-                on:input={(evt) => ($form.password = evt.detail)}
+                on:input={evt => ($form.password = evt.detail)}
             />
         </div>
 
-        <div class="flex justify-end mt-4">
+        <div class="mt-4 flex justify-end">
             <BreezeButton
                 class="ml-4"
                 xclass:opacity-25={form.processing}

@@ -1,10 +1,10 @@
 <script>
-    import BreezeButton from "@/Components/Button.svelte";
-    import BreezeGuestLayout from "@/Layouts/Guest.svelte";
-    import BreezeInput from "@/Components/Input.svelte";
-    import BreezeLabel from "@/Components/Label.svelte";
-    import BreezeValidationErrors from "@/Components/ValidationErrors.svelte";
-    import { useForm } from "@inertiajs/svelte";
+    import BreezeButton from '@/Components/Button.svelte';
+    import BreezeGuestLayout from '@/Layouts/Guest.svelte';
+    import BreezeInput from '@/Components/Input.svelte';
+    import BreezeLabel from '@/Components/Label.svelte';
+    import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
+    import { useForm } from '@inertiajs/svelte';
     let err = {};
     export let errors = {};
     export let email;
@@ -19,8 +19,8 @@
         password_confirmation: null,
     });
     const onSubmit = () => {
-        $form.post("/reset-password", {
-            onSuccess: () => $form.reset("password", "password_confirmation"),
+        $form.post('/reset-password', {
+            onSuccess: () => $form.reset('password', 'password_confirmation'),
         });
     };
 </script>
@@ -43,7 +43,7 @@
                 required
                 autofocus
                 autocomplete="username"
-                on:input={(evt) => ($form.email = evt.detail)}
+                on:input={evt => ($form.email = evt.detail)}
             />
         </div>
 
@@ -56,7 +56,7 @@
                 value={form.password}
                 required
                 autocomplete="new-password"
-                on:input={(evt) => ($form.password = evt.detail)}
+                on:input={evt => ($form.password = evt.detail)}
             />
         </div>
 
@@ -69,11 +69,11 @@
                 value={form.password_confirmation}
                 required
                 autocomplete="new-password"
-                on:input={(evt) => ($form.password_confirmation = evt.detail)}
+                on:input={evt => ($form.password_confirmation = evt.detail)}
             />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="mt-4 flex items-center justify-end">
             <BreezeButton
                 xclass:opacity-25={form.processing}
                 disabled={form.processing}

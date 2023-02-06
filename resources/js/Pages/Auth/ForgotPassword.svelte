@@ -1,10 +1,10 @@
 <script>
-    import BreezeButton from "@/Components/Button.svelte";
-    import BreezeGuestLayout from "@/Layouts/Guest.svelte";
-    import BreezeInput from "@/Components/Input.svelte";
-    import BreezeLabel from "@/Components/Label.svelte";
-    import BreezeValidationErrors from "@/Components/ValidationErrors.svelte";
-    import { useForm } from "@inertiajs/svelte";
+    import BreezeButton from '@/Components/Button.svelte';
+    import BreezeGuestLayout from '@/Layouts/Guest.svelte';
+    import BreezeInput from '@/Components/Input.svelte';
+    import BreezeLabel from '@/Components/Label.svelte';
+    import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
+    import { useForm } from '@inertiajs/svelte';
     let err = {};
     export let errors = {};
     export let status;
@@ -12,10 +12,10 @@
         err = errors;
     }
     const form = useForm({
-        email: "",
+        email: '',
     });
     const onSubmit = () => {
-        $form.post(window.route("password.email"));
+        $form.post(window.route('password.email'));
     };
 </script>
 
@@ -31,7 +31,7 @@
     </div>
 
     {#if status}
-        <div class="mb-4 font-medium text-sm text-green-600">
+        <div class="mb-4 text-sm font-medium text-green-600">
             {status}
         </div>
     {/if}
@@ -49,11 +49,11 @@
                 required
                 autofocus
                 autocomplete="username"
-                on:input={(evt) => ($form.email = evt.detail)}
+                on:input={evt => ($form.email = evt.detail)}
             />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="mt-4 flex items-center justify-end">
             <BreezeButton
                 sclass:opacity-25={form.processing}
                 disabled={form.processing}

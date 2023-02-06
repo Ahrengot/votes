@@ -1,15 +1,15 @@
 <script>
-    import BreezeButton from "@/Components/Button.svelte";
-    import BreezeGuestLayout from "@/Layouts/Guest.svelte";
-    import { Link, useForm } from "@inertiajs/svelte";
+    import BreezeButton from '@/Components/Button.svelte';
+    import BreezeGuestLayout from '@/Layouts/Guest.svelte';
+    import { Link, useForm } from '@inertiajs/svelte';
     let verificationLinkSent;
     export let status;
     const form = useForm();
     const onSubmit = () => {
-        $form.post(window.route("verification.send"));
+        $form.post(window.route('verification.send'));
     };
     $: {
-        verificationLinkSent = status === "verification-link-sent";
+        verificationLinkSent = status === 'verification-link-sent';
     }
 </script>
 
@@ -26,7 +26,7 @@
 
     {#if verificationLinkSent}
         <div
-            class="mb-4 font-medium text-sm text-green-600"
+            class="mb-4 text-sm font-medium text-green-600"
             v-if="verificationLinkSent"
         >
             A new verification link has been sent to the email address you
@@ -44,10 +44,10 @@
             </BreezeButton>
 
             <Link
-                href={window.route("logout")}
+                href={window.route('logout')}
                 method="post"
                 as="button"
-                class="underline text-sm text-gray-600 hover:text-gray-900"
+                class="text-sm text-gray-600 underline hover:text-gray-900"
                 >Log Out</Link
             >
         </div>
