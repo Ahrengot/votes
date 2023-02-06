@@ -1,26 +1,30 @@
 {
-    "private": true,
-    "scripts": {
-        "start": "vite",
-        "build": "vite build",
-        "test": "php artisan test --without-tty",
-        "test:coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest -d memory_limit=2048M --coverage",
-        "test:mysql": "./vendor/bin/pest --configuration=phpunit-mysql.xml"
-    },
-    "dependencies": {
-        "@inertiajs/progress": "^0.2.7",
-        "@inertiajs/svelte": "^1.0.0"
-    },
-    "devDependencies": {
-        "@sveltejs/vite-plugin-svelte": "^1.2.0",
-        "@tailwindcss/forms": "^0.5.3",
-        "@vitejs/plugin-vue": "^4.0.0",
-        "autoprefixer": "^10.4.12",
-        "laravel-vite-plugin": "^0.7.3",
-        "postcss": "^8.4.18",
-        "svelte": "^3.55.1",
-        "svelte-loader": "^3.1.5",
-        "tailwindcss": "^3.2.1",
-        "vite": "^4.0.0"
-    }
+  "private": true,
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "test": "php artisan test --without-tty",
+    "test:coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest -d memory_limit=2048M --coverage",
+    "test:mysql": "./vendor/bin/pest --configuration=phpunit-mysql.xml",
+    "prettier": "prettier --write 'resources/js/**/*.{svelte,js}'"
+  },
+  "dependencies": {
+    "@inertiajs/progress": "^0.2.7",
+    "@inertiajs/svelte": "^1.0.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.2.0",
+    "@tailwindcss/forms": "^0.5.3",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "autoprefixer": "^10.4.12",
+    "laravel-vite-plugin": "^0.7.3",
+    "postcss": "^8.4.18",
+    "prettier": "^2.8.3",
+    "prettier-plugin-svelte": "^2.9.0",
+    "prettier-plugin-tailwindcss": "^0.2.2",
+    "svelte": "^3.55.1",
+    "svelte-loader": "^3.1.5",
+    "tailwindcss": "^3.2.1",
+    "vite": "^4.0.0"
+  }
 }
