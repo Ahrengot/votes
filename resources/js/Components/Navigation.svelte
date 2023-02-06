@@ -5,6 +5,9 @@
     import BreezeNavLink from '@/Components/NavLink.svelte';
     import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink.svelte';
     import { page, Link } from '@inertiajs/svelte';
+    import route from 'ziggy';
+
+    console.log(route);
 
     let user = $page.props.auth.user;
 
@@ -18,14 +21,16 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex shrink-0 items-center">
-                    <Link href="/dashboard">
+                    <Link href={route('dashboard')}>
                         <BreezeApplicationLogo class="block h-9 w-auto" />
                     </Link>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <BreezeNavLink href="/dashboard" active={$page.component === 'Dashboard'}>Dashboard</BreezeNavLink>
+                    <BreezeNavLink href={route('dashboard')} active={$page.component === 'Dashboard'}
+                        >Dashboard</BreezeNavLink
+                    >
                 </div>
             </div>
 
@@ -79,7 +84,7 @@
     <!-- Responsive Navigation Menu -->
     <div class:block={showingNavigationDropdown} class:hidden={!showingNavigationDropdown} class="sm:hidden">
         <div class="space-y-1 pt-2 pb-3">
-            <BreezeResponsiveNavLink href="/dashboard" active={$page.component === 'Dashboard'}>
+            <BreezeResponsiveNavLink href={route('dashboard')} active={$page.component === 'Dashboard'}>
                 Dashboard
             </BreezeResponsiveNavLink>
         </div>

@@ -1,54 +1,56 @@
 import fs from 'fs';
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { resolve } from 'path';
 const projectRootDir = resolve(__dirname);
-import {homedir} from 'os';
+import { homedir } from 'os';
 
-let host = 'vote.test'
+let host = 'vote.test';
 
 export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
         }),
-        svelte({})
+        svelte({
+            /*onwarn: (warning, handler) => {
+                console.log(warning);
+            },*/
+        }),
     ],
     optimizeDeps: {
-        include: [
-            '@inertiajs/svelte',
-        ]
+        include: ['@inertiajs/svelte'],
     },
     resolve: {
         alias: {
             '@': resolve(projectRootDir, 'resources/js'),
             '~': resolve(projectRootDir, 'resources'),
+            ziggy: resolve('vendor/tightenco/ziggy/dist/index.es.js'),
         },
         extensions: ['.js', '.svelte', '.json'],
     },
     server: detectServerConfig(host),
 });
 
-
 function detectServerConfig(host) {
-    let keyPath = resolve(homedir(), `.config/valet/Certificates/${host}.key`)
-    let certificatePath = resolve(homedir(), `.config/valet/Certificates/${host}.crt`)
+    let keyPath = resolve(homedir(), `.config/valet/Certificates/${host}.key`);
+    let certificatePath = resolve(homedir(), `.config/valet/Certificates/${host}.crt`);
 
     if (!fs.existsSync(keyPath)) {
-        return {}
+        return {};
     }
 
     if (!fs.existsSync(certificatePath)) {
-        return {}
+        return {};
     }
 
     return {
-        hmr: {host},
+        hmr: { host },
         host,
         https: {
             key: fs.readFileSync(keyPath),
             cert: fs.readFileSync(certificatePath),
         },
-    }
+    };
 }

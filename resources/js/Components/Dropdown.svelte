@@ -18,20 +18,17 @@
 </script>
 
 <div class="relative">
-    <div on:click={evt => (open = !open)}>
+    <button type="button" on:click={evt => (open = !open)}>
         <slot name="trigger" />
-    </div>
+    </button>
 
     <!-- Full Screen Dropdown Overlay -->
     {#if open}
-        <div class="fixed inset-0 z-40" on:click={evt => (open = false)} />
-        <div
-            class="absolute z-50 mt-2 rounded-md shadow-lg {className}"
-            on:click={evt => (open = false)}
-        >
-            <div
-                class="rounded-md ring-1 ring-black ring-opacity-5 {contentClasses}"
-            >
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div type="button" class="fixed inset-0 z-40" on:click={evt => (open = false)} />
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div class="absolute z-50 mt-2 rounded-md shadow-lg {className}" on:click={evt => (open = false)}>
+            <div class="rounded-md ring-1 ring-black ring-opacity-5 {contentClasses}">
                 <slot name="content" />
             </div>
         </div>
