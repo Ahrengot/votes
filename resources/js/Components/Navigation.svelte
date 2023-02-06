@@ -7,7 +7,7 @@
     import { Link, page } from '@inertiajs/svelte';
     import route from 'ziggy';
 
-    let user = $page.props.auth.user;
+    let user = $page.props.auth?.user;
 
     let showingNavigationDropdown = false;
 </script>
@@ -19,46 +19,59 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex shrink-0 items-center">
-                    <Link href={route('topics.index')}>
+                    <Link href={user ? route('topics.index') : '/'}>
                         <BreezeApplicationLogo class="block h-9 w-auto" />
                     </Link>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <BreezeNavLink href={route('topics.index')} active={$page.component === 'Topics/Index'}>
-                        Topics
+                {#if user}
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <BreezeNavLink href={route('topics.index')} active={$page.component === 'Topics/Index'}>
+                            Topics
+                        </BreezeNavLink>
+                    </div>
+                {/if}
+            </div>
+
+            {#if user}
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <!-- Settings Dropdown -->
+                    <div class="relative ml-3">
+                        <BreezeDropdown class="right-0 w-48 origin-top-right">
+                            <span class="inline-flex rounded-md" slot="trigger">
+                                <button
+                                    type="button"
+                                    class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+                                >
+                                    {user.name}
+
+                                    <svg class="ml-2 -mr-0.5 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
+                            </span>
+
+                            <BreezeDropdownLink slot="content" href="/logout" method="post" as="button" type="button">
+                                Log Out
+                            </BreezeDropdownLink>
+                        </BreezeDropdown>
+                    </div>
+                </div>
+            {:else}
+                <div class="flex space-x-8 sm:-my-px sm:ml-10">
+                    <BreezeNavLink href={route('login')} active={$page.component === 'Auth/Login'}>
+                        Log in
+                    </BreezeNavLink>
+                    <BreezeNavLink href={route('register')} active={$page.component === 'Auth/Register'}>
+                        Register
                     </BreezeNavLink>
                 </div>
-            </div>
-
-            <div class="hidden sm:ml-6 sm:flex sm:items-center">
-                <!-- Settings Dropdown -->
-                <div class="relative ml-3">
-                    <BreezeDropdown class="right-0 w-48 origin-top-right">
-                        <span class="inline-flex rounded-md" slot="trigger">
-                            <button
-                                type="button"
-                                class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
-                            >
-                                {user.name}
-
-                                <svg class="ml-2 -mr-0.5 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </button>
-                        </span>
-
-                        <BreezeDropdownLink slot="content" href="/logout" method="post" as="button" type="button">
-                            Log Out
-                        </BreezeDropdownLink>
-                    </BreezeDropdown>
-                </div>
-            </div>
+            {/if}
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
@@ -82,20 +95,29 @@
     <!-- Responsive Navigation Menu -->
     <div class:block={showingNavigationDropdown} class:hidden={!showingNavigationDropdown} class="sm:hidden">
         <div class="space-y-1 pt-2 pb-3">
-            <BreezeResponsiveNavLink href={route('topics.index')} active={$page.component === 'Topics/Index'}>
-                Topics
-            </BreezeResponsiveNavLink>
+            {#if user}
+                <BreezeResponsiveNavLink href={route('topics.index')} active={$page.component === 'Topics/Index'}>
+                    Topics
+                </BreezeResponsiveNavLink>
+            {/if}
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="border-t border-gray-200 pt-4 pb-1">
-            <div class="px-4">
-                <div class="text-base font-medium text-gray-800">{user.name}</div>
-                <div class="text-sm font-medium text-gray-500">{user.email}</div>
-            </div>
+            {#if user}
+                <div class="px-4">
+                    <div class="text-base font-medium text-gray-800">{user.name}</div>
+                    <div class="text-sm font-medium text-gray-500">{user.email}</div>
+                </div>
+            {/if}
 
             <div class="mt-3 space-y-1">
-                <BreezeResponsiveNavLink href="/logout" method="post" as="button">Log Out</BreezeResponsiveNavLink>
+                {#if user}
+                    <BreezeResponsiveNavLink href="/logout" method="post" as="button">Log Out</BreezeResponsiveNavLink>
+                {:else}
+                    <BreezeResponsiveNavLink href={route('login')} as="button">Log in</BreezeResponsiveNavLink>
+                    <BreezeResponsiveNavLink href={route('register')} as="button">Register</BreezeResponsiveNavLink>
+                {/if}
             </div>
         </div>
     </div>

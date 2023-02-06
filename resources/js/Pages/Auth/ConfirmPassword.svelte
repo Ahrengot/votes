@@ -5,6 +5,7 @@
     import BreezeLabel from '@/Components/Label.svelte';
     import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
     import { useForm } from '@inertiajs/svelte';
+
     const form = useForm({
         password: '',
     });
@@ -21,8 +22,7 @@
 
 <BreezeGuestLayout>
     <div class="mb-4 text-sm text-gray-600">
-        This is a secure area of the application. Please confirm your password
-        before continuing.
+        This is a secure area of the application. Please confirm your password before continuing.
     </div>
 
     <BreezeValidationErrors class="mb-4" />
@@ -43,11 +43,7 @@
         </div>
 
         <div class="mt-4 flex justify-end">
-            <BreezeButton
-                class="ml-4"
-                xclass:opacity-25={form.processing}
-                disabled={form.processing}
-            >
+            <BreezeButton class="ml-4" xclass:opacity-25={form.processing} disabled={form.processing} type="submit">
                 Confirm
             </BreezeButton>
         </div>

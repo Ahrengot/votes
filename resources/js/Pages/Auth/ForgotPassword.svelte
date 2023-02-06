@@ -5,6 +5,7 @@
     import BreezeLabel from '@/Components/Label.svelte';
     import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
     import { useForm } from '@inertiajs/svelte';
+
     let err = {};
     export let errors = {};
     export let status;
@@ -25,9 +26,8 @@
 
 <BreezeGuestLayout>
     <div class="mb-4 text-sm text-gray-600">
-        Forgot your password? No problem. Just let us know your email address
-        and we will email you a password reset link that will allow you to
-        choose a new one.
+        Forgot your password? No problem. Just let us know your email address and we will email you a password reset
+        link that will allow you to choose a new one.
     </div>
 
     {#if status}
@@ -54,10 +54,7 @@
         </div>
 
         <div class="mt-4 flex items-center justify-end">
-            <BreezeButton
-                sclass:opacity-25={form.processing}
-                disabled={form.processing}
-            >
+            <BreezeButton sclass:opacity-25={form.processing} disabled={form.processing} type="submit">
                 Email Password Reset Link
             </BreezeButton>
         </div>

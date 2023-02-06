@@ -5,6 +5,7 @@
     import BreezeLabel from '@/Components/Label.svelte';
     import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
     import { useForm } from '@inertiajs/svelte';
+
     let err = {};
     export let errors = {};
     export let email;
@@ -74,10 +75,7 @@
         </div>
 
         <div class="mt-4 flex items-center justify-end">
-            <BreezeButton
-                xclass:opacity-25={form.processing}
-                disabled={form.processing}
-            >
+            <BreezeButton xclass:opacity-25={form.processing} disabled={form.processing} type="submit">
                 Reset Password
             </BreezeButton>
         </div>
