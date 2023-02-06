@@ -10,7 +10,9 @@ class Topic extends Model {
 
     use HasUlids;
 
-    public function user():BelongsTo
+    protected $guarded = [];
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

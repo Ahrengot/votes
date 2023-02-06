@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\TopicsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,17 +15,20 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function() {
     return Inertia::render('Welcome', [
         'can' => [
-            'login' => Route::has('login'),
+            'login'    => Route::has('login'),
             'register' => Route::has('register'),
         ],
     ]);
 });
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', function() {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::resource('topics', TopicsController::class)
+     ->except('create');
+
+require __DIR__ . '/auth.php';
