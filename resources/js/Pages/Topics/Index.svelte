@@ -1,14 +1,15 @@
 <script>
-    /* svelte-ignore unused-export-let */
+    import { inertia, useForm } from '@inertiajs/svelte';
     import EmptyState from '@/Components/EmptyState.svelte';
     import Layout from '@/Layouts/Authenticated.svelte';
     import Button from '@/Components/Button.svelte';
     import Modal from '@/Components/Modal.svelte';
     import Label from '@/Components/Label.svelte';
     import Input from '@/Components/Input.svelte';
-    import { useForm } from '@inertiajs/svelte';
     import route from 'ziggy';
     import Error from '@/Components/Error.svelte';
+    import { Icon } from '@steeze-ui/svelte-icon';
+    import { ChevronRight } from '@steeze-ui/heroicons';
 
     export let topics,
         errors = {};
@@ -28,7 +29,10 @@
         });
     };
 
-    console.log({ topics });
+    const relativeTime = new Intl.DateTimeFormat(undefined, {
+        dateStyle: 'short',
+        timeStyle: 'short',
+    });
 </script>
 
 <svelte:head>
@@ -42,14 +46,37 @@
     </div>
 
     <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            {#if !topics.length}
-                <EmptyState msg="You haven't created any topics yet ..." class="min-h-[60vh]" />
-            {:else}
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="border-b border-gray-200 bg-white p-6">We have some topics</div>
-                </div>
-            {/if}
+        <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
+            <ol class="divide-y divide-gray-200 rounded-lg bg-white shadow">
+                {#each topics as topic (topic.id)}
+                    <li>
+                        <a
+                            use:inertia
+                            href={route('topics.show', topic.id)}
+                            class="flex items-center justify-between gap-3 p-5 hover:bg-gray-50"
+                        >
+                            <div class="truncate">
+                                <p class="font-medium leading-none text-gray-600">
+                                    {topic.name}
+                                </p>
+                                <time
+                                    class="mt-1.5 block flex-shrink-0 text-sm font-normal leading-none text-gray-500"
+                                    datetime={topic.created_at}
+                                >
+                                    Posted {relativeTime.format(new Date(topic.created_at))}
+                                </time>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <Icon src={ChevronRight} class="h-6 w-6 text-gray-400" />
+                            </div>
+                        </a>
+                    </li>
+                {:else}
+                    <li>
+                        <EmptyState msg="You haven't created any topics yet ..." class="p-5" />
+                    </li>
+                {/each}
+            </ol>
         </div>
     </div>
 

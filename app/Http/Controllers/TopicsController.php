@@ -33,6 +33,9 @@ class TopicsController extends Controller {
 
     public function show(Topic $topic)
     {
+        return Inertia::render('Topics/Show', [
+            'topic' => $topic,
+        ]);
     }
 
     public function edit(Topic $topic)
