@@ -7,17 +7,20 @@
     import route from 'ziggy';
     import Input from '@/Components/Input.svelte';
     import Button from '@/Components/Button.svelte';
+    import getBrowserFingerprint from 'get-browser-fingerprint';
 
     export let topic,
         suggestions,
-        iphash,
         can,
         errors = {};
+
+    const fingerprint = getBrowserFingerprint();
 
     const topicForm = useForm(topic);
 
     const suggestion = useForm({
         name: '',
+        fingerprint,
     });
 
     const submitNewSuggestion = () => {
@@ -32,7 +35,8 @@
         if (!confirm('Are you suge your want to delete this suggestion?')) {
             return;
         }
-        router.delete(route('suggestions.destroy', id));
+
+        router.delete(route('suggestions.destroy', { suggestion: id, fingerprint }));
     };
 
     const relativeTime = new Intl.DateTimeFormat(undefined, {
@@ -76,7 +80,7 @@
                                 </time>
                             </div>
                             <div class="flex-shrink-0">
-                                {#if can['update'] || iphash === suggestion.iphash}
+                                {#if can['update'] || fingerprint == suggestion.fingerprint}
                                     <button
                                         type="button"
                                         class="inline-flex items-center rounded-full border border-gray-300 p-2 text-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
