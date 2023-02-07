@@ -11,6 +11,7 @@
     import Button from '@/Components/Button.svelte';
     import getBrowserFingerprint from 'get-browser-fingerprint';
     import { formatRelative } from 'date-fns';
+    import { onDestroy, onMount } from 'svelte';
 
     export let topic,
         suggestions,
@@ -42,10 +43,7 @@
         router.delete(route('suggestions.destroy', { suggestion: id, fingerprint }));
     };
 
-    const voteFor = suggestion => {
-        console.log(suggestion.votes);
-        return suggestion.votes.find(v => v.fingerprint == fingerprint);
-    };
+    const voteFor = suggestion => suggestion.votes.find(v => v.fingerprint == fingerprint);
 
     let voteRequestProcessing = false;
     const toggleVote = async suggestion => {
@@ -61,6 +59,14 @@
 
         voteRequestProcessing = false;
     };
+
+    const refresh = () => {
+        router.visit(route('topics.show', topic.id), { only: ['suggestions'] });
+    };
+
+    let interval;
+    onMount(() => (interval = setInterval(refresh, 2500)));
+    onDestroy(() => interval && clearInterval(interval));
 </script>
 
 <svelte:head>
