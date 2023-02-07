@@ -1,7 +1,7 @@
 <script>
     import Layout from '@/Layouts/Authenticated.svelte';
     import { Icon } from '@steeze-ui/svelte-icon';
-    import { ChevronRight } from '@steeze-ui/heroicons';
+    import { Trash } from '@steeze-ui/heroicons';
     import Toggle from '@/Components/Toggle.svelte';
     import { router, useForm } from '@inertiajs/svelte';
     import route from 'ziggy';
@@ -10,6 +10,7 @@
 
     export let topic,
         suggestions,
+        iphash,
         can,
         errors = {};
 
@@ -40,6 +41,13 @@
         });
     };
 
+    const deleteSuggestion = id => {
+        if (!confirm('Are you suge your want to delete this suggestion?')) {
+            return;
+        }
+        router.delete(route('suggestions.destroy', id));
+    };
+
     const relativeTime = new Intl.DateTimeFormat(undefined, {
         dateStyle: 'short',
         timeStyle: 'short',
@@ -68,7 +76,7 @@
             <ol class="divide-y divide-gray-200 rounded-lg bg-white shadow">
                 {#each suggestions as suggestion (suggestion.id)}
                     <li>
-                        <div class="flex items-center justify-between gap-3 p-5 hover:bg-gray-50">
+                        <div class="flex items-center justify-between gap-3 p-5">
                             <div class="truncate">
                                 <p class="font-medium leading-none text-gray-600">
                                     {suggestion.name}
@@ -81,7 +89,15 @@
                                 </time>
                             </div>
                             <div class="flex-shrink-0">
-                                <Icon src={ChevronRight} class="h-6 w-6 text-gray-400" />
+                                {#if can['update'] || iphash === suggestion.iphash}
+                                    <button
+                                        type="button"
+                                        class="inline-flex items-center rounded-full border border-gray-300 p-2 text-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                        on:click={() => deleteSuggestion(suggestion.id)}
+                                    >
+                                        <Icon src={Trash} class="h-6 w-6" />
+                                    </button>
+                                {/if}
                             </div>
                         </div>
                     </li>

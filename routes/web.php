@@ -37,6 +37,7 @@ Route::post('topics/{topic}/allow-suggestions', SetAllowTopicSuggestionsControll
      ->name('topics.allow-suggestions');
 
 Route::resource('topics.suggestions', TopicSuggestionsController::class)
+     ->shallow()
      ->only('store', 'destroy');
 
 require __DIR__ . '/auth.php';

@@ -12,17 +12,27 @@ class TopicSuggestionsController extends Controller {
     {
         abort_unless($topic->allow_suggestions || $this->authorize('update', $topic), 403);
 
-
-        $topic->suggestions()->create($request->validate([
-            'name' => 'required|string|min:3',
-        ]));
+        $topic->suggestions()->create([
+            ...$request->validate([
+                'name' => 'required|string|min:3',
+            ]),
+            'iphash' => hash('sha256', $request->ip()),
+        ]);
 
         return back();
     }
 
-    public function destroy(Requeust $request, Suggestion $suggestion)
+    public function destroy(Request $request, Suggestion $suggestion)
     {
-        //
+        abort_unless(
+            $suggestion->iphash === hash('sha256', $request->ip())
+            || $this->authorize('update', $suggestion->topic),
+            403
+        );
+
+        $suggestion->delete();
+
+        return back();
     }
 
 }
