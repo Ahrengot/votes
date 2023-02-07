@@ -15,7 +15,7 @@
     };
 </script>
 
-<div class="flex items-center justify-center" class:opacity-50={disabled}>
+<div class="flex items-center justify-center">
     <label class="font-medium text-gray-900" on:click={button.click()}>{label}</label>
 
     <!-- Button -->

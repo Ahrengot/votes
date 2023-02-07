@@ -34,8 +34,9 @@ class TopicsController extends Controller {
     public function show(Request $request, Topic $topic)
     {
         return Inertia::render('Topics/Show', [
-            'topic' => $topic,
-            'can'   => [
+            'topic'       => $topic,
+            'suggestions' => $topic->suggestions()->get(['id', 'name', 'created_at']),
+            'can'         => [
                 'update' => optional($request->user())->can('update', $topic) ?? false,
             ],
         ]);
