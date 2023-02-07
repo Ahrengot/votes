@@ -12,6 +12,10 @@ class Topic extends Model {
 
     protected $guarded = [];
 
+    protected $casts = [
+        'allow_suggestions' => 'bool'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SetAllowTopicSuggestionsController;
 use App\Http\Controllers\TopicsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,5 +31,8 @@ Route::get('/dashboard', function() {
 
 Route::resource('topics', TopicsController::class)
      ->except('create');
+
+Route::post('topics/{topic}/allow-suggestions', SetAllowTopicSuggestionsController::class)
+     ->name('topics.allow-suggestions');
 
 require __DIR__ . '/auth.php';

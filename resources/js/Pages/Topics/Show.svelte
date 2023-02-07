@@ -4,16 +4,32 @@
     import { Icon } from '@steeze-ui/svelte-icon';
     import { ChevronRight } from '@steeze-ui/heroicons';
     import Toggle from '@/Components/Toggle.svelte';
+    import { router } from '@inertiajs/svelte';
+    import route from 'ziggy';
 
     export let topic,
+        can,
         errors = {};
+
+    let updatingAllowSuggestions = false;
+
+    const submitAllowSuggestions = () => {
+        updatingAllowSuggestions = true;
+        router.post(
+            route('topics.allow-suggestions', topic.id),
+            {
+                allow_suggestions: topic.allow_suggestions,
+            },
+            {
+                onSuccess: () => (updatingAllowSuggestions = false),
+            }
+        );
+    };
 
     const relativeTime = new Intl.DateTimeFormat(undefined, {
         dateStyle: 'short',
         timeStyle: 'short',
     });
-
-    let isToggled = false;
 </script>
 
 <svelte:head>
@@ -23,7 +39,14 @@
 <Layout>
     <div slot="header" class="flex items-center justify-between">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">{topic.name}</h2>
-        <Toggle label="Allow suggestions" on={isToggled} on:change={e => (isToggled = e.detail)} />
+        {#if can['update']}
+            <Toggle
+                label="Allow suggestions"
+                bind:value={topic.allow_suggestions}
+                on:change={submitAllowSuggestions}
+                disabled={updatingAllowSuggestions}
+            />
+        {/if}
     </div>
 
     <div class="py-12">

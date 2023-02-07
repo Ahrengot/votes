@@ -31,10 +31,13 @@ class TopicsController extends Controller {
         return back();
     }
 
-    public function show(Topic $topic)
+    public function show(Request $request, Topic $topic)
     {
         return Inertia::render('Topics/Show', [
             'topic' => $topic,
+            'can'   => [
+                'update' => optional($request->user())->can('update', $topic) ?? false,
+            ],
         ]);
     }
 
