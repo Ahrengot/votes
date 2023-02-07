@@ -14,20 +14,7 @@
         can,
         errors = {};
 
-    let updatingAllowSuggestions = false;
-
-    const submitAllowSuggestions = () => {
-        updatingAllowSuggestions = true;
-        router.post(
-            route('topics.allow-suggestions', topic.id),
-            {
-                allow_suggestions: topic.allow_suggestions,
-            },
-            {
-                onSuccess: () => (updatingAllowSuggestions = false),
-            }
-        );
-    };
+    const topicForm = useForm(topic);
 
     const suggestion = useForm({
         name: '',
@@ -64,9 +51,9 @@
         {#if can['update']}
             <Toggle
                 label="Suggestions"
-                bind:value={topic.allow_suggestions}
-                on:change={submitAllowSuggestions}
-                disabled={updatingAllowSuggestions}
+                bind:value={$topicForm.allow_suggestions}
+                on:change={() => $topicForm.post(route('topics.allow-suggestions', topic.id))}
+                disabled={$topicForm.processing}
             />
         {/if}
     </div>
