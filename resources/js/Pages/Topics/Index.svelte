@@ -10,6 +10,7 @@
     import Error from '@/Components/Error.svelte';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { ChevronRight } from '@steeze-ui/heroicons';
+    import { formatRelative } from 'date-fns';
 
     export let topics,
         errors = {};
@@ -28,11 +29,6 @@
             },
         });
     };
-
-    const relativeTime = new Intl.DateTimeFormat(undefined, {
-        dateStyle: 'short',
-        timeStyle: 'short',
-    });
 </script>
 
 <svelte:head>
@@ -63,7 +59,7 @@
                                     class="mt-1.5 block flex-shrink-0 text-sm font-normal leading-none text-gray-500"
                                     datetime={topic.created_at}
                                 >
-                                    Posted {relativeTime.format(new Date(topic.created_at))}
+                                    Created {formatRelative(new Date(topic.created_at), new Date())}
                                 </time>
                             </div>
                             <div class="flex-shrink-0">

@@ -8,6 +8,7 @@
     import Input from '@/Components/Input.svelte';
     import Button from '@/Components/Button.svelte';
     import getBrowserFingerprint from 'get-browser-fingerprint';
+    import { formatRelative } from 'date-fns';
 
     export let topic,
         suggestions,
@@ -38,11 +39,6 @@
 
         router.delete(route('suggestions.destroy', { suggestion: id, fingerprint }));
     };
-
-    const relativeTime = new Intl.DateTimeFormat(undefined, {
-        dateStyle: 'short',
-        timeStyle: 'short',
-    });
 </script>
 
 <svelte:head>
@@ -72,23 +68,29 @@
                                 <p class="font-medium leading-none text-gray-600">
                                     {suggestion.name}
                                 </p>
-                                <time
-                                    class="mt-1.5 block flex-shrink-0 text-sm font-normal leading-none text-gray-500"
-                                    datetime={suggestion.created_at}
-                                >
-                                    Posted {relativeTime.format(new Date(suggestion.created_at))}
-                                </time>
+                                <div class="mt-1.5 flex items-center gap-1 text-sm leading-none text-gray-500">
+                                    <time datetime={suggestion.created_at}>
+                                        {formatRelative(new Date(suggestion.created_at), new Date())}
+                                    </time>
+                                    {#if can['update'] || fingerprint == suggestion.fingerprint}
+                                        <span>&bull;</span>
+                                        <button
+                                            type="button"
+                                            class="hover:text-gray-800"
+                                            on:click={() => deleteSuggestion(suggestion.id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    {/if}
+                                </div>
                             </div>
                             <div class="flex-shrink-0">
-                                {#if can['update'] || fingerprint == suggestion.fingerprint}
-                                    <button
-                                        type="button"
-                                        class="inline-flex items-center rounded-full border border-gray-300 p-2 text-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                        on:click={() => deleteSuggestion(suggestion.id)}
-                                    >
-                                        <Icon src={Trash} class="h-6 w-6" />
-                                    </button>
-                                {/if}
+                                <button
+                                    type="button"
+                                    class="inline-flex items-center rounded-full border border-gray-300 p-2 text-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                >
+                                    <Icon src={Trash} class="h-6 w-6" />
+                                </button>
                             </div>
                         </div>
                     </li>
