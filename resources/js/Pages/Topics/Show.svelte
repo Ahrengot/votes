@@ -1,8 +1,9 @@
 <script>
     import Layout from '@/Layouts/Authenticated.svelte';
     import { slide } from 'svelte/transition';
+    import { flip } from 'svelte/animate';
     import { Icon } from '@steeze-ui/svelte-icon';
-    import { Trash } from '@steeze-ui/heroicons';
+    import { HandThumbUp } from '@steeze-ui/heroicons';
     import Toggle from '@/Components/Toggle.svelte';
     import { router, useForm } from '@inertiajs/svelte';
     import route from 'ziggy';
@@ -40,6 +41,26 @@
 
         router.delete(route('suggestions.destroy', { suggestion: id, fingerprint }));
     };
+
+    const voteFor = suggestion => {
+        console.log(suggestion.votes);
+        return suggestion.votes.find(v => v.fingerprint == fingerprint);
+    };
+
+    let voteRequestProcessing = false;
+    const toggleVote = async suggestion => {
+        voteRequestProcessing = true;
+
+        const vote = voteFor(suggestion);
+
+        if (vote) {
+            await router.delete(route('votes.destroy', { vote: vote.id, fingerprint }));
+        } else {
+            await router.post(route('suggestions.votes.store', { suggestion: suggestion.id, fingerprint }));
+        }
+
+        voteRequestProcessing = false;
+    };
 </script>
 
 <svelte:head>
@@ -63,7 +84,7 @@
         <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
             <ol class="divide-y divide-gray-200 rounded-lg bg-white shadow">
                 {#each suggestions as suggestion (suggestion.id)}
-                    <li transition:slide={{ duration: 350 }}>
+                    <li animate:flip={{ duration: 350 }} transition:slide={{ duration: 350 }}>
                         <div class="flex items-center justify-between gap-3 p-5">
                             <div class="truncate">
                                 <p class="font-medium leading-none text-gray-600">
@@ -88,9 +109,20 @@
                             <div class="flex-shrink-0">
                                 <button
                                     type="button"
-                                    class="inline-flex items-center rounded-full border border-gray-300 p-2 text-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    class="group flex flex-col items-center gap-1 rounded border px-3 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 {voteFor(
+                                        suggestion
+                                    )
+                                        ? 'border-transparent bg-emerald-500 text-white hover:bg-emerald-600'
+                                        : 'border-gray-300 text-gray-400 hover:bg-gray-50'}"
+                                    on:click={() => toggleVote(suggestion)}
+                                    disabled={voteRequestProcessing}
                                 >
-                                    <Icon src={Trash} class="h-6 w-6" />
+                                    <Icon
+                                        src={HandThumbUp}
+                                        theme="solid"
+                                        class="h-5 w-5 transition group-hover:-rotate-12"
+                                    />
+                                    <div class="text-xs">{suggestion.votes_count}</div>
                                 </button>
                             </div>
                         </div>

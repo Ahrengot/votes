@@ -35,7 +35,11 @@ class TopicsController extends Controller {
     {
         return Inertia::render('Topics/Show', [
             'topic'       => $topic,
-            'suggestions' => $topic->suggestions,
+            'suggestions' => $topic->suggestions()
+                                   ->withCount('votes')
+                                   ->with('votes:id,suggestion_id,fingerprint')
+                                   ->orderBy('votes_count', 'desc')
+                                   ->get(),
             'can'         => [
                 'update' => optional($request->user())->can('update', $topic) ?? false,
             ],

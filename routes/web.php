@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SetAllowTopicSuggestionsController;
+use App\Http\Controllers\SuggestionVotesController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\TopicSuggestionsController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,10 @@ Route::post('topics/{topic}/allow-suggestions', SetAllowTopicSuggestionsControll
      ->name('topics.allow-suggestions');
 
 Route::resource('topics.suggestions', TopicSuggestionsController::class)
+     ->shallow()
+     ->only('store', 'destroy');
+
+Route::resource('suggestions.votes', SuggestionVotesController::class)
      ->shallow()
      ->only('store', 'destroy');
 
