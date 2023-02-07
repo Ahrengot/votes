@@ -1,5 +1,6 @@
 <script>
     import Layout from '@/Layouts/Authenticated.svelte';
+    import { slide } from 'svelte/transition';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { Trash } from '@steeze-ui/heroicons';
     import Toggle from '@/Components/Toggle.svelte';
@@ -62,7 +63,7 @@
         <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
             <ol class="divide-y divide-gray-200 rounded-lg bg-white shadow">
                 {#each suggestions as suggestion (suggestion.id)}
-                    <li>
+                    <li transition:slide={{ duration: 350 }}>
                         <div class="flex items-center justify-between gap-3 p-5">
                             <div class="truncate">
                                 <p class="font-medium leading-none text-gray-600">
