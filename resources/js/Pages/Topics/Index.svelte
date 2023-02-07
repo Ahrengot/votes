@@ -1,7 +1,7 @@
 <script>
     import { inertia, useForm } from '@inertiajs/svelte';
     import EmptyState from '@/Components/EmptyState.svelte';
-    import Layout from '@/Layouts/Authenticated.svelte';
+    import Layout from '@/Layouts/Layout.svelte';
     import Button from '@/Components/Button.svelte';
     import Modal from '@/Components/Modal.svelte';
     import Label from '@/Components/Label.svelte';

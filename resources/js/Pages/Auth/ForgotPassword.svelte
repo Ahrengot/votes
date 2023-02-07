@@ -1,6 +1,6 @@
 <script>
     import BreezeButton from '@/Components/Button.svelte';
-    import BreezeGuestLayout from '@/Layouts/Guest.svelte';
+    import Layout from '@/Layouts/Layout.svelte';
     import BreezeInput from '@/Components/Input.svelte';
     import BreezeLabel from '@/Components/Label.svelte';
     import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
@@ -24,7 +24,7 @@
     <title>Forgot Password</title>
 </svelte:head>
 
-<BreezeGuestLayout>
+<Layout>
     <div class="mb-4 text-sm text-gray-600">
         Forgot your password? No problem. Just let us know your email address and we will email you a password reset
         link that will allow you to choose a new one.
@@ -59,4 +59,4 @@
             </BreezeButton>
         </div>
     </form>
-</BreezeGuestLayout>
+</Layout>

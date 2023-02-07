@@ -1,6 +1,6 @@
 <script>
     import BreezeButton from '@/Components/Button.svelte';
-    import BreezeGuestLayout from '@/Layouts/Guest.svelte';
+    import Layout from '@/Layouts/Layout.svelte';
     import BreezeInput from '@/Components/Input.svelte';
     import BreezeLabel from '@/Components/Label.svelte';
     import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
@@ -20,7 +20,7 @@
     <title>Confirm Password</title>
 </svelte:head>
 
-<BreezeGuestLayout>
+<Layout>
     <div class="mb-4 text-sm text-gray-600">
         This is a secure area of the application. Please confirm your password before continuing.
     </div>
@@ -48,4 +48,4 @@
             </BreezeButton>
         </div>
     </form>
-</BreezeGuestLayout>
+</Layout>

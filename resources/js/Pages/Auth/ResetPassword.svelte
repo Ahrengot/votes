@@ -1,6 +1,6 @@
 <script>
     import BreezeButton from '@/Components/Button.svelte';
-    import BreezeGuestLayout from '@/Layouts/Guest.svelte';
+    import Layout from '@/Layouts/Layout.svelte';
     import BreezeInput from '@/Components/Input.svelte';
     import BreezeLabel from '@/Components/Label.svelte';
     import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
@@ -30,7 +30,7 @@
     <title>Reset Password</title>
 </svelte:head>
 
-<BreezeGuestLayout>
+<Layout>
     <BreezeValidationErrors class="mb-4" errors={err} />
 
     <form on:submit|preventDefault={onSubmit}>
@@ -80,4 +80,4 @@
             </BreezeButton>
         </div>
     </form>
-</BreezeGuestLayout>
+</Layout>

@@ -1,5 +1,5 @@
 <script>
-    import Layout from '@/Layouts/Authenticated.svelte';
+    import Layout from '@/Layouts/Layout.svelte';
     import { slide } from 'svelte/transition';
     import { flip } from 'svelte/animate';
     import { Icon } from '@steeze-ui/svelte-icon';
@@ -27,7 +27,7 @@
         fingerprint,
     });
 
-    const submitNewSuggestion = () => {
+    const postSuggestion = () => {
         $suggestion.post(route('topics.suggestions.store', topic.id), {
             onSuccess: () => {
                 $suggestion.reset();
@@ -43,13 +43,13 @@
         router.delete(route('suggestions.destroy', { suggestion: id, fingerprint }));
     };
 
-    const voteFor = suggestion => suggestion.votes.find(v => v.fingerprint == fingerprint);
+    const findVoteFor = suggestion => suggestion.votes.find(v => v.fingerprint == fingerprint);
 
     let voteRequestProcessing = false;
     const toggleVote = async suggestion => {
         voteRequestProcessing = true;
 
-        const vote = voteFor(suggestion);
+        const vote = findVoteFor(suggestion);
 
         if (vote) {
             await router.delete(route('votes.destroy', { vote: vote.id, fingerprint }));
@@ -115,7 +115,7 @@
                             <div class="flex-shrink-0">
                                 <button
                                     type="button"
-                                    class="group flex flex-col items-center gap-1 rounded border px-3 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 {voteFor(
+                                    class="group flex flex-col items-center gap-1 rounded border px-3 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 {findVoteFor(
                                         suggestion
                                     )
                                         ? 'border-transparent bg-emerald-500 text-white hover:bg-emerald-600'
@@ -138,7 +138,7 @@
 
             {#if can['update'] || topic.allow_suggestions}
                 <div class="mt-10">
-                    <form on:submit|preventDefault={submitNewSuggestion}>
+                    <form on:submit|preventDefault={postSuggestion}>
                         <fieldset disabled={suggestion.processing}>
                             <div class="flex items-center gap-3">
                                 <Input

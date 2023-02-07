@@ -1,6 +1,6 @@
 <script>
     import BreezeButton from '@/Components/Button.svelte';
-    import BreezeGuestLayout from '@/Layouts/Authenticated.svelte';
+    import Layout from '@/Layouts/Layout.svelte';
     import BreezeInput from '@/Components/Input.svelte';
     import BreezeLabel from '@/Components/Label.svelte';
     import BreezeValidationErrors from '@/Components/ValidationErrors.svelte';
@@ -33,7 +33,7 @@
     <title>Register</title>
 </svelte:head>
 
-<BreezeGuestLayout>
+<Layout>
     <div class="mx-auto max-w-2xl py-[10vh] sm:px-6 lg:px-8">
         <BreezeValidationErrors class="mb-4" errors={err} />
 
@@ -102,4 +102,4 @@
             </div>
         </form>
     </div>
-</BreezeGuestLayout>
+</Layout>
