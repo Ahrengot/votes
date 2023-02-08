@@ -9,14 +9,14 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('suggestions', function(Blueprint $table) {
-            $table->renameColumn('iphash', 'fingerprint');
+            $table->renameColumn('`iphash`', '`fingerprint`');
         });
     }
 
     public function down()
     {
         Schema::table('suggestions', function(Blueprint $table) {
-            $table->renameColumn('fingerprint', 'iphash');
+            $table->renameColumn('`fingerprint`', '`iphash`');
         });
     }
 
