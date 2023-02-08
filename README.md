@@ -2,6 +2,8 @@
 
 This application is inspired by tools like sli.do and lets you create topics that anyone can vote on.
 
+[View demo](https://vote.dev.ahrengot.com/topics/01grq7ps9yeypee0c31v697j0z)
+
 ![App screenshot](https://github.com/Ahrengot/votes/blob/media/screenshot.png)
 
 Voting doesn't require a user profile and the flow is very unobtrusive. As the topic author, you control
